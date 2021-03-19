@@ -12,7 +12,7 @@ class _IndividualTaskState extends State<IndividualTask> {
     return Scaffold(
       appBar: AppBar(
         title: Text("My Garbage"),
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.green[800],
       ),
       body: ListView(
         children: [
@@ -24,14 +24,19 @@ class _IndividualTaskState extends State<IndividualTask> {
           Container(
           child: Column(
             children: [
+
               TextField(
                 decoration: InputDecoration(
-                  labelText: "Quantity",
-                  labelStyle: TextStyle(
+                  hintText: "Quantity",
+                  hintStyle: TextStyle(
                     color: Colors.black,
                   ),
                   filled: true,
                   icon: Icon(Icons.keyboard_arrow_down),
+                  errorBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  disabledBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
                 ),
                 cursorColor: Colors.black,
                 onTap: (){

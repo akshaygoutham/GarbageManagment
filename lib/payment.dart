@@ -14,7 +14,7 @@ class _PaymentState extends State<Payment> {
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.green[800],
         title: Text('Payment'),
       ),
       body: Container(
@@ -26,10 +26,11 @@ class _PaymentState extends State<Payment> {
             children: [
               // SizedBox(width: 100.0,),
              TextField(
+               keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: 'Card Number',
+              hintText: 'Card Number',
               filled: true,
-              labelStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: Colors.black),
               border: InputBorder.none,
                 ),
             cursorColor: Colors.black,
@@ -37,10 +38,11 @@ class _PaymentState extends State<Payment> {
               ),
               Divider(),
               TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'CVV',
+                  hintText: 'CVV',
                   filled: true,
-                  labelStyle: TextStyle(color: Colors.black),
+                  hintStyle: TextStyle(color: Colors.black),
                   border: InputBorder.none,
                 ),
                 cursorColor: Colors.black,
@@ -49,10 +51,11 @@ class _PaymentState extends State<Payment> {
               ),
               Divider(),
               TextField(
+                keyboardType:TextInputType.datetime,
                 decoration: InputDecoration(
-                  labelText: 'Exp month/year',
+                  hintText: 'Exp month/year',
                   filled: true,
-                  labelStyle: TextStyle(color: Colors.black),
+                  hintStyle: TextStyle(color: Colors.black),
                   border: InputBorder.none,
                 ),
                 cursorColor: Colors.black,

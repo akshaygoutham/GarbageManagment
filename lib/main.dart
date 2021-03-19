@@ -1,25 +1,22 @@
-
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:garbage_management_system/register.dart';
 import 'package:garbage_management_system/task_list.dart';
 import 'package:garbage_management_system/user.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-void main(){
+void main() {
   runApp(LoginPage());
-  
 }
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-void setState(Null Function() param0) {
-}
+void setState(Null Function() param0) {}
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -37,83 +34,129 @@ class LoginPage1 extends StatefulWidget {
 }
 
 class _LoginPage1State extends State<LoginPage1> {
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  // void validate(){
+  //   if(formKey.currentState.validate()){
+  //     print("Validate");
+  //   }else{
+  //     print("Not validate");
+  //   }
+  // }
+  // String validatepass(value){
+  //
+  //     if(value.isEmpty){
+  //       return "Required";
+  //     }else{
+  //       return null;
+  //     }
+  // }
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  login() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    final response = await http.post("http://172.20.10.2/garbage/login.php",
+        body: {"email": email, "password": password});
+    final data =jsonDecode(response.body);
+    int value = data['success'];
+    String emailAPI = data['email'];
+    String passwordAPI = data['password'];
+    String id = data['id'];
+    if(value == 1){
+       Fluttertoast.showToast(msg: "login successful");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => UserInterface()));
+    }
+    else{
+      Fluttertoast.showToast(msg: "login failed");
+    }
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body:SafeArea(
-
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
-              children: [
-                SizedBox(height: 90.0),
-                Container(
-                  color: Colors.transparent,
-                  child: Column(
-                    children: [
-                      Image.asset("asset/ICONGARB.png", width:200,height:200,),
-                      SizedBox(height:60.0),
-                    ],
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          children: [
+            SizedBox(height: 90.0),
+            Container(
+              color: Colors.transparent,
+              child: Column(
+                children: [
+                  Image.asset(
+                    "asset/ICONGARB.png",
+                    width: 200,
+                    height: 200,
                   ),
-                ),
-
-                SizedBox(height:50.0,
-                child:TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    filled: true,
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                    ),
-                    border: InputBorder.none
-                  ),
-                  cursorColor: Colors.black,
-                  style: TextStyle(color: Colors.black),
-                ),
-                ),
-                Divider(),
-                SizedBox(
-                  height: 50.0,
-                  child: TextField(
-                   decoration: InputDecoration(
-                     labelText: 'Password',
-                     filled: true,
-                     labelStyle: TextStyle(
-                       color: Colors.black,
-                     ),
-                     border: InputBorder.none,
-                    ),
-                    cursorColor: Colors.black,
-                   obscureText: true,
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                RaisedButton(
-
-                  child: Text('Login',style: TextStyle(color: Colors.black),),
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => UserInterface()));
-                  },
-                ),
-
-                // FlatButton(
-                //     child: Text('Forgot?',style:TextStyle(color: Colors.black),),
-                //     onPressed: (){}
-                // ),
-                SizedBox(height: 20),
-                FlatButton(
-                    child: Text('Register',style:TextStyle(color: Colors.black)),
-                    padding: EdgeInsets.symmetric(horizontal: 50),
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
-                    }
-                ),
-              ],
+                  SizedBox(height: 60.0),
+                ],
+              ),
             ),
-         ) ,
-      );
+            SizedBox(
+              height: 50.0,
+              child:  TextFormField(
+                controller: emailController,
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  filled: true,
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            Divider(),
+            SizedBox(
+              height: 50.0,
+              child: TextFormField(
+                controller: passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Password',
+                  filled: true,
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  border: InputBorder.none,
+                ),
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
+            RaisedButton(
+              child: Text(
+                'Login',
+                style: TextStyle(color: Colors.black),
+              ),
+              splashColor: Colors.green,
+              shape:  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15)
+              ),
+              onPressed:() {
+                print(emailController);
+                print(passwordController);
+                login();
+              }
+            ),
+            SizedBox(height: 20),
+            FlatButton(
+                child: Text('Register', style: TextStyle(color: Colors.black)),
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+                },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
-

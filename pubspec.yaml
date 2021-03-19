@@ -22,9 +22,12 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  http: ^0.12.0
+  fluttertoast: ^7.1.8
+  http: ^0.12.2
   flutter:
     sdk: flutter
+
+
 
 
 
@@ -55,7 +58,6 @@ flutter:
       - asset/3.jpg
       - asset/4.jpg
       - asset/5.jpg
-      - asset/slippers.jpg
       - asset/6.png
       - asset/gm.jpg
       - asset/bin-2.jpg

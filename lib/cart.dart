@@ -12,7 +12,7 @@ class _MyCartState extends State<MyCart> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.green[800],
         title: Column(
           children: [
             Text("My cart"),
@@ -75,7 +75,6 @@ class _MyCartState extends State<MyCart> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),

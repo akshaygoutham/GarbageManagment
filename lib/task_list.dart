@@ -30,17 +30,19 @@ class _TaskState extends State<Task> {
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children:[
-                      SizedBox(height: 5),
+                      SizedBox(height: 2),
                       Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                        ),
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      color: Colors.white,
                       width: MediaQuery.of(context).size.width,
-                      height: 100,
                       child: ListTile(
                         title: Text('${tasks[index]}'),
-                        leading: Icon(Icons.delete),
+                          leading: Image.asset('asset/bin-2.jpg'),
                         trailing: Icon(Icons.arrow_forward_ios),
-                        contentPadding: EdgeInsets.all(10),
+                        contentPadding: EdgeInsets.all(15),
                         onTap: (){
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>IndividualTask()));
                         //   Navigator.pushReplacementNamed(context, "/logout);
