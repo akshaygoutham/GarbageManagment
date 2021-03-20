@@ -5,6 +5,7 @@ import 'package:garbage_management_system/task_list.dart';
 import 'package:garbage_management_system/user.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(LoginPage());
@@ -35,21 +36,7 @@ class LoginPage1 extends StatefulWidget {
 
 class _LoginPage1State extends State<LoginPage1> {
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  // void validate(){
-  //   if(formKey.currentState.validate()){
-  //     print("Validate");
-  //   }else{
-  //     print("Not validate");
-  //   }
-  // }
-  // String validatepass(value){
-  //
-  //     if(value.isEmpty){
-  //       return "Required";
-  //     }else{
-  //       return null;
-  //     }
-  // }
+
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -60,20 +47,32 @@ class _LoginPage1State extends State<LoginPage1> {
 
     final response = await http.post("http://172.20.10.2/garbage/login.php",
         body: {"email": email, "password": password});
-    final data =jsonDecode(response.body);
+    final data = jsonDecode(response.body);
     int value = data['success'];
     String emailAPI = data['email'];
     String passwordAPI = data['password'];
     String id = data['id'];
-    if(value == 1){
-       Fluttertoast.showToast(msg: "login successful");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => UserInterface()));
-    }
-    else{
+    if (value == 1) {
+      Fluttertoast.showToast(msg: "login successful");
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => UserInterface()));
+    } else {
       Fluttertoast.showToast(msg: "login failed");
     }
   }
 
+  void initState() {
+    super.initState();
+    setdata();
+  }
+
+  void setdata() async {
+    SharedPreferences Prefs = await SharedPreferences.getInstance();
+    if (Prefs.getString('name') != null) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => UserInterface()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +98,7 @@ class _LoginPage1State extends State<LoginPage1> {
             ),
             SizedBox(
               height: 50.0,
-              child:  TextFormField(
+              child: TextFormField(
                 controller: emailController,
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
@@ -132,27 +131,39 @@ class _LoginPage1State extends State<LoginPage1> {
               ),
             ),
             RaisedButton(
-              child: Text(
-                'Login',
-                style: TextStyle(color: Colors.black),
-              ),
-              splashColor: Colors.green,
-              shape:  RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15)
-              ),
-              onPressed:() {
-                print(emailController);
-                print(passwordController);
-                login();
-              }
-            ),
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: Colors.black),
+                ),
+                splashColor: Colors.green[450],
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                onPressed: () async {
+                  print(emailController);
+                  print(passwordController);
+                  if (emailController.text == "") {
+                    Fluttertoast.showToast(msg: "Name Required");
+                  // ignore: unrelated_type_equality_checks
+                  } else if (passwordController.text  == ""){
+                    Fluttertoast.showToast(msg: "Password Required");
+                  }else{
+                    login();
+                  }
+                  var email = emailController.text;
+                  var password = passwordController.text;
+                  SharedPreferences Prefs =
+                      await SharedPreferences.getInstance();
+                  Prefs.setString('username', email);
+                  Prefs.setString('password', password);
+                }),
             SizedBox(height: 20),
             FlatButton(
-                child: Text('Register', style: TextStyle(color: Colors.black)),
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
-                },
+              child: Text('Register', style: TextStyle(color: Colors.black)),
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => MyApp()));
+              },
             ),
           ],
         ),

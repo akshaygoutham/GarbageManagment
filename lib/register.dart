@@ -92,12 +92,12 @@ class MyCustomFormState extends State<MyCustomForm> {
                           border: InputBorder.none,
                         ),
                         cursorColor: Colors.black,
-                        // validator: (value) {
-                        //   if (value.isEmpty) {
-                        //     return 'Please enter some text';
-                        //   }
-                        //   return null;
-                        // },
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ),
@@ -117,12 +117,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           border: InputBorder.none,
                         ),
                         cursorColor: Colors.black,
-                        // validator: (value) {
-                        //   if (value.isEmpty) {
-                        //     return 'Please enter some text';
-                        //   }
-                        //   return null;
-                        // },
                       ),
                     ),
                   ),
@@ -142,12 +136,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           border: InputBorder.none,
                         ),
                         cursorColor: Colors.black,
-                        // validator: (value) {
-                        //   if (value.isEmpty) {
-                        //     return 'Please enter some text';
-                        //   }
-                        //   return null;
-                        // },
                       ),
                     ),
                   ),
@@ -166,12 +154,6 @@ class MyCustomFormState extends State<MyCustomForm> {
                           border: InputBorder.none,
                         ),
                         cursorColor: Colors.black,
-                        // validator: (value) {
-                        //   if (value.isEmpty) {
-                        //     return 'Please enter some text';
-                        //   }
-                        //   return null;
-                        // },
                         obscureText: true,
                       ),
                     ),
